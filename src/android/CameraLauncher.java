@@ -246,6 +246,8 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
         boolean saveAlbumPermission;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             saveAlbumPermission = PermissionHelper.hasPermission(this, Manifest.permission.READ_MEDIA_IMAGES);
+        } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R) {
+            saveAlbumPermission = PermissionHelper.hasPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
         } else {
             saveAlbumPermission = PermissionHelper.hasPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                     && PermissionHelper.hasPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -283,6 +285,8 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
         } else if (takePicturePermission) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 PermissionHelper.requestPermission(this, TAKE_PIC_SEC, Manifest.permission.READ_MEDIA_IMAGES);
+            } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R) {
+                PermissionHelper.requestPermission(this, TAKE_PIC_SEC, Manifest.permission.READ_EXTERNAL_STORAGE);
             } else {
                 PermissionHelper.requestPermissions(this, TAKE_PIC_SEC,
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE});
@@ -290,6 +294,8 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 PermissionHelper.requestPermissions(this, TAKE_PIC_SEC, new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_MEDIA_IMAGES});
+            } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R) {
+                PermissionHelper.requestPermission(this, TAKE_PIC_SEC, Manifest.permission.READ_EXTERNAL_STORAGE);
             } else {
                 PermissionHelper.requestPermissions(this, TAKE_PIC_SEC, permissions);
             }
