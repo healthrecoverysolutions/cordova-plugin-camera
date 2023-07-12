@@ -244,9 +244,9 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
      */
     public void callTakePicture(int returnType, int encodingType) {
         boolean saveAlbumPermission;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // android 13 and above
             saveAlbumPermission = PermissionHelper.hasPermission(this, Manifest.permission.READ_MEDIA_IMAGES);
-        } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R) {
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) { // android 11 and android 12
             saveAlbumPermission = PermissionHelper.hasPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
         } else {
             saveAlbumPermission = PermissionHelper.hasPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -283,18 +283,18 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
         } else if (saveAlbumPermission) {
             PermissionHelper.requestPermission(this, TAKE_PIC_SEC, Manifest.permission.CAMERA);
         } else if (takePicturePermission) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // android 13 and above
                 PermissionHelper.requestPermission(this, TAKE_PIC_SEC, Manifest.permission.READ_MEDIA_IMAGES);
-            } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R) {
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {  // android 11 and android 12
                 PermissionHelper.requestPermission(this, TAKE_PIC_SEC, Manifest.permission.READ_EXTERNAL_STORAGE);
             } else {
                 PermissionHelper.requestPermissions(this, TAKE_PIC_SEC,
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE});
             }
         } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // android 13 and above
                 PermissionHelper.requestPermissions(this, TAKE_PIC_SEC, new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_MEDIA_IMAGES});
-            } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R) {
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {  // android 11 and android 12
                 PermissionHelper.requestPermission(this, TAKE_PIC_SEC, Manifest.permission.READ_EXTERNAL_STORAGE);
             } else {
                 PermissionHelper.requestPermissions(this, TAKE_PIC_SEC, permissions);
